@@ -16,7 +16,7 @@ R_cpu = 1 - (1 - R_cpu_unit)**2  # falla si ambos procesadores fallan
 # 3️⃣ Sistema de almacenamiento (3 discos en paralelo, Weibull α=1, β=3)
 alpha_disk = 1
 beta_disk = 3
-R_disk_unit = rweibull2(t, alpha_disk, beta_disk)
+R_disk_unit = rweibull2(t, beta_disk, alpha_disk)
 R_disk = 1 - (1 - R_disk_unit)**3  # falla si los 3 discos fallan
 
 # 4️⃣ Fiabilidad total del servidor
