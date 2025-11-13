@@ -18,6 +18,35 @@ def ejemplo_enunciado() -> float:
     return calcular_fiabilidad(S)
 
 
+
+def escenario_servidor() -> float:
+    """
+    Servidor en serie: [tarjeta_red] · [almacenamiento (3 discos en paralelo)] · [procesador (2 CPUs en paralelo)]
+    Datos (fin de semana):
+      - Red: R = 0.99
+      - Cada disco: falla 0.2 -> R = 0.8 (3 en paralelo)
+      - Cada CPU:  falla 0.25 -> R = 0.75 (2 en paralelo)
+    """
+    net = simple(0.99)
+
+    # Almacenamiento: 3 discos redundantes (paralelo), cada uno R=0.8
+    d1 = simple(0.8)
+    d2 = simple(0.8)
+    d3 = simple(0.8)
+    storage = paralelo(d1, d2, d3)
+
+    # Procesador: 2 CPUs redundantes (paralelo), cada una R=0.75
+    c1 = simple(0.75)
+    c2 = simple(0.75)
+    cpu = paralelo(c1, c2)
+
+    # Sistema global en serie
+    sistema = serie(net, storage, cpu)
+    return calcular_fiabilidad(sistema)
+
+
 if __name__ == "__main__":
-    R = ejemplo_enunciado()
-    print(f"Fiabilidad total (esperado 0.88825): {R:.5f}")
+    R = escenario_servidor()
+    print(f"Fiabilidad total (esperado 0.9207): {R:.6f}")
+    # Verificación rápida (fallará si algo no cuadra)
+    assert abs(R - 0.9207) < 1e-12

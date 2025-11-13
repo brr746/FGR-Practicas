@@ -30,3 +30,7 @@ if __name__ == "__main__":
     print(f"Fiabilidad del servidor: {R_servidor:.6f}")
     print(f"Probabilidad de fallo: {1 - R_servidor:.6f}")
     print(f"Disponibilidad: {R_servidor * 100:.2f}%")
+    # Verificación numérica
+    expected = 0.9207
+    from math import isclose
+    assert isclose(R_servidor, expected, rel_tol=1e-12, abs_tol=1e-12)
