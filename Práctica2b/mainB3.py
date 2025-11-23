@@ -1,5 +1,5 @@
 # main.py
-from B2 import rexp2, rweibull2
+from Práctica2b.B2 import rexp2, rweibull2
 
 # --- Escenario ---
 t = 1  # año

@@ -1,5 +1,5 @@
 # Si tu archivo se llama Practica3.py:
-from EjercicioA3 import calcular_fiabilidad, simple, serie, paralelo
+from Práctica2a.EjercicioA3 import calcular_fiabilidad, simple, serie, paralelo
 # Si se llama EjercicioA3.py, usa:
 # from EjercicioA3 import calcular_fiabilidad, simple, serie, paralelo
 

@@ -1,6 +1,6 @@
 # main5.py — Ejercicio A5 (DBFs)
 from math import isclose
-from EjercicioA3 import calcular_fiabilidad, simple, serie, paralelo
+from Práctica2a.EjercicioA3 import calcular_fiabilidad, simple, serie, paralelo
 
 
 def escenario_servidor_critico() -> float:
