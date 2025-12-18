@@ -202,3 +202,36 @@ def prob_raiz_por_inferencia(bn: gum.BayesNet, nombre_raiz: str) -> float:
     ie.makeInference()
     posterior = ie.posterior(nombre_raiz)  # distribución del nodo
     return float(posterior[1])  # estado 1 = "falla"
+
+
+# ===============================================================
+#  EJERCICIO 7 – MODELO NUEVO
+# ===============================================================
+
+def construir_arbol_ej7():
+    t = 1  # tiempo de análisis: 1 año
+
+    # Probabilidades de fallo usando distribución exponencial
+    p_psu   = exp_fallo(t, 5)  # Fuente de alimentación
+    p_cpu   = exp_fallo(t, 4)  # Cada CPU
+    p_disco = exp_fallo(t, 3)  # Cada disco
+
+    # Eventos hoja
+    psu = dict(tipo="evento", nombre="PSU", prob=p_psu, hijos=[])
+
+    cpu1 = dict(tipo="evento", nombre="CPU1", prob=p_cpu, hijos=[])
+    cpu2 = dict(tipo="evento", nombre="CPU2", prob=p_cpu, hijos=[])
+    cpu_fail = dict(tipo="AND", nombre=None, prob=None, hijos=[cpu1, cpu2])
+    cpu_event = dict(tipo="evento", nombre="FalloCPU", prob=None, hijos=[cpu_fail])
+
+    d1 = dict(tipo="evento", nombre="D1", prob=p_disco, hijos=[])
+    d2 = dict(tipo="evento", nombre="D2", prob=p_disco, hijos=[])
+    discos_fail = dict(tipo="AND", nombre=None, prob=None, hijos=[d1, d2])
+    discos_event = dict(tipo="evento", nombre="FalloDiscos", prob=None, hijos=[discos_fail])
+
+    # Puerta OR principal: fallo del servidor si falla PSU, CPU o discos
+    or_total = dict(tipo="OR", nombre=None, prob=None, hijos=[psu, cpu_event, discos_event])
+
+    # RAÍZ: evento del servidor
+    raiz = dict(tipo="evento", nombre="FalloServidor", prob=None, hijos=[or_total])
+    return raiz
